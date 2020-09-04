@@ -1,0 +1,23 @@
+.app-main-form {
+  .ant-input-lg {
+    font-size: 14px;
+  }
+  .ant-row {
+    em {
+      color: #1890ff;
+      font-style: normal;
+      cursor: pointer;
+    }
+  }
+  .site-form-item-icon {
+    svg {
+      color: #b6b6b6;
+    }
+  }
+}
+
+.app-round-modal {
+  .ant-modal-content {
+    border-radius: 10px;
+  }
+}

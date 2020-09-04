@@ -1,26 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { hot } from 'react-hot-loader';
+import './assets/css/common.scss';
+import 'antd/dist/antd.css';
+import './assets/css/app-antd.scss';
+import 'core-js';
+import Router from '../src/routes';
+import './assets/css/main.scss';
+import './assets/js/icons';
+import { message } from 'antd';
+message.config({ duration: 1 });
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+const App = () => <Router />;
+export default hot(module)(App);
