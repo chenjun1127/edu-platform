@@ -2,9 +2,10 @@ import React, { useRef, useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AppContext } from '../../hooks/context';
 import CommonModal from '../../components/CommonModal';
+import Footer from '../../components/Footer';
 import Top from '../../components/Top';
 import Trianglify from '../../assets/js/trianglify.min';
-import { getCourseById, addToCart, getCartList } from '../../api/main';
+import { getCourseById, addToCart, getCartList, inquireIsBuy } from '../../api/main';
 import { formatPrice } from '../../assets/js/utils';
 import { Button, Tabs, message } from 'antd';
 import Chapters from './chapters';
@@ -14,6 +15,8 @@ const Detail = (props) => {
   const [data, setData] = useState({});
   const { state, dispatch } = useContext(AppContext);
   const [visible, setVisible] = useState(false);
+  const [isBuy, setIsBuy] = useState(false);
+  const userInfo = state.userReducer.userInfo;
   const couterRef = useRef();
   var pattern = Trianglify({
     width: window.innerWidth,
@@ -28,10 +31,20 @@ const Detail = (props) => {
         }
       });
     };
+    const getInquireIsBuy = () => {
+      if (userInfo) {
+        inquireIsBuy({ params: { userId: userInfo.id, productId: props.match.params.id } }).then((res) => {
+          if (res.data.code === 0) {
+            res.data.data && setIsBuy(true);
+          }
+        });
+      }
+    };
     getDetail();
-  }, [props.match.params.id]);
+    getInquireIsBuy();
+  }, [props.match.params.id, userInfo]);
+
   const addCart = (item) => {
-    const userInfo = state.userReducer.userInfo;
     if (!userInfo) {
       props.history.push('/login');
     } else {
@@ -54,6 +67,21 @@ const Detail = (props) => {
   const handleCancel = (value) => {
     setVisible(value);
   };
+  const renderBtn = () => {
+    if (!userInfo || !isBuy) {
+      return (
+        <Button type="primary" danger size="large" shape="round" onClick={() => addCart(data)}>
+          加入购物车
+        </Button>
+      );
+    } else {
+      return (
+        <Button type="primary" danger size="large" shape="round" onClick={() => props.history.push('/order/center')}>
+          去学习
+        </Button>
+      );
+    }
+  };
   return (
     <>
       <Top></Top>
@@ -70,11 +98,7 @@ const Detail = (props) => {
                 <span>更新时间：{data.createTime}</span>
               </p>
             </div>
-            <div>
-              <Button type="primary" danger size="large" shape="round" onClick={() => addCart(data)}>
-                加入购物车
-              </Button>
-            </div>
+            <div>{renderBtn()}</div>
           </div>
         </div>
       </div>
@@ -88,7 +112,8 @@ const Detail = (props) => {
           </TabPane>
         </Tabs>
       </div>
-      <CommonModal width={400} visible={visible} component={<ModalContent {...props} handleCancel={handleCancel} />} handleCancel={handleCancel}></CommonModal>
+      <Footer></Footer>
+      <CommonModal width={400} visible={visible} component={<ModalContent {...props} cancel={handleCancel} />} handleCancel={handleCancel} />
     </>
   );
 };
@@ -97,10 +122,10 @@ const ModalContent = (props) => {
     <div className="modal-cart-content">
       <div>商品已经在购物车内</div>
       <div>
-        <Button size="large" shape="round" onClick={() => props.handleCancel(false)}>
+        <Button size="large" shape="round" onClick={() => props.cancel(false)}>
           继续逛逛
         </Button>
-        <Button type="primary" size="large" danger shape="round" onClick={() => props.history.push('/cart')}>
+        <Button type="primary" size="large" danger shape="round" onClick={() => props.history.push('/order/cart')}>
           去购物车
         </Button>
       </div>

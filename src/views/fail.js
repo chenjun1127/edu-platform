@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import SvgIcon from '../components/SvgIcon';
 import { withRouter } from 'react-router-dom';
 const Fail = (props) => {
   const { search } = props.location;
@@ -37,7 +38,7 @@ const Fail = (props) => {
   }, [count, props.history]);
   return (
     <div className="operate-tips">
-      <img src={require('../assets/icons/fail.svg')} alt="fail" />
+      <SvgIcon name="fail" fill="#1890ff" style={{ fontSize: '100px' }} />
       <div>{failContent[type].text}，3秒后返回首页</div>
     </div>
   );

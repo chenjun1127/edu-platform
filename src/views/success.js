@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import SvgIcon from '../components/SvgIcon';
 import { withRouter } from 'react-router-dom';
 const Success = (props) => {
   const { search } = props.location;
@@ -9,15 +10,23 @@ const Success = (props) => {
   const successContent = [
     {
       type: 0,
-      text: '邮件发送成功', 
+      text: '邮件发送成功',
+      callbackPath: '/',
     },
     {
       type: 1,
       text: '操作成功',
+      callbackPath: '/',
     },
     {
       type: 2,
       text: '链接有效',
+      callbackPath: '/',
+    },
+    {
+      type: 3,
+      text: '订单提交成功',
+      callbackPath: '/order/center',
     },
   ];
   useEffect(() => {
@@ -27,18 +36,22 @@ const Success = (props) => {
         setCount(count - 1);
       }, 1000);
     } else {
-      localStorage.clear();
-      props.history.replace('/');
+      if (type !== 3) {
+        localStorage.clear();
+        props.history.replace(successContent[type].callbackPath);
+      } else {
+        props.history.push(successContent[type].callbackPath);
+      }
     }
 
     return () => {
       timer && clearInterval(timer);
     };
-  }, [count, props.history]);
+  }, [count, props.history, successContent, type]);
 
   return (
     <div className="operate-tips">
-      <img src={require('../assets/icons/success.svg')} alt="success" />
+      <SvgIcon name="success" fill="#1890ff" style={{ fontSize: '100px' }} />
       <div>{successContent[type].text}，3秒后返回首页</div>
     </div>
   );

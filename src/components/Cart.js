@@ -24,7 +24,7 @@ const Cart = (props) => {
 
   const deleteCart = (id) => {
     // delete方式传参
-    deleteCartById({ data: { ids: [id] } }).then((res) => {
+    deleteCartById({ data: { ids: [id], userId: props.id } }).then((res) => {
       if (res.data.code === 0) {
         getCart();
       } else {
@@ -41,7 +41,7 @@ const Cart = (props) => {
             <p>{item.course.title}</p>
             <p>
               <span>￥{formatPrice(item.course.price)}</span>
-              <em onClick={() => deleteCart(item.id)}>删除</em>
+              <em onClick={() => deleteCart(item.courseId)}>删除</em>
             </p>
           </div>
         </li>
@@ -55,7 +55,7 @@ const Cart = (props) => {
         <div className="shopping-cart-title">
           <span>我的购物车</span>
           <span>
-            已加入<em>{list.length}</em>门课程
+            已加入<em>{props.id ? list.length : 0}</em>门课程
           </span>
         </div>
         {props.id && list.length ? (
@@ -68,18 +68,19 @@ const Cart = (props) => {
           </div>
         )}
         <div className="shopping-cart-bottom">
-          <Link to={`/order/${props.id}`}>我的订单中心</Link>
-          <Button shape="round" type="danger" onClick={() => props.history.push('/order/cart')}>
+          <Link to={props.id ? `/order/center` : '/login'}>我的订单中心</Link>
+          <Button shape="round" type="danger" onClick={() => props.history.push(props.id ? '/order/cart' : '/login')}>
             去购物车
           </Button>
         </div>
       </div>
     );
   };
+
   return (
     <>
       <Dropdown overlay={dropdownContent} placement="bottomRight" arrow={true}>
-        <Link to="/order/cart" className="shopping-cart">
+        <Link to={props.id ? '/order/cart' : '/login'} className="shopping-cart">
           <SvgIcon name="cart" />
           <em>购物车</em>
           <span>{state.shoppingCartReducer ? state.shoppingCartReducer.list.length : 0}</span>

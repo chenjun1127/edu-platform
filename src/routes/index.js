@@ -4,6 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { AppContext, userReducer, operateReducer, shoppingCartReducer, initUserState, initOperateState, initShoppingCartState } from '../hooks/context';
 import { combineReducers } from '../assets/js/utils';
 import PrivateRoute from '../components/PrivateRoute';
+ 
 
 
 const Home = lazy(() => import('../views/home/index'));
@@ -19,9 +20,10 @@ const ResetPassword = lazy(() => import('../views/user/reset-password'));
 const Detail = lazy(() => import('../views/detail'));
 const Login = lazy(() => import('../views/user/login'));
 const Register = lazy(() => import('../views/user/register'));
-const Order = lazy(() => import('../views/order/order'));
+const Order = lazy(() => import('../views/order/center'));
 const Cart = lazy(() => import('../views/order/cart'));
 const Confirm = lazy(() => import('../views/order/confirm'));
+const Pay = lazy(() => import('../views/order/pay'));
 const Routes = () => {
   // 多个useReducer
   const reducer = combineReducers({ userReducer, operateReducer, shoppingCartReducer });
@@ -41,8 +43,8 @@ const Routes = () => {
           <div className="app-container">
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/register" exact component={Register} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
               <Route path="/active" component={UserActive} />
               <Route path="/course" component={Course} />
               <Route path="/success" component={Success} />
@@ -55,6 +57,7 @@ const Routes = () => {
               <PrivateRoute path="/order/center" component={Order} />
               <PrivateRoute path="/order/cart" exact component={Cart} />
               <PrivateRoute path="/order/confirm" component={Confirm} />
+              <PrivateRoute path="/order/pay" component={Pay} />
               <Route component={NoMatch} />
             </Switch>
           </div>

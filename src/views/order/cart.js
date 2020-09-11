@@ -37,7 +37,7 @@ const Cart = (props) => {
   // console.log(newList);
   const deleteCart = (id) => {
     // delete方式传参
-    deleteCartById({ data: { ids: [id] } }).then((res) => {
+    deleteCartById({ data: { ids: [id], userId } }).then((res) => {
       if (res.data.code === 0) {
         getCart();
       } else {
@@ -60,7 +60,7 @@ const Cart = (props) => {
           </div>
           <div className="money-col">￥{formatPrice(item.course.price)}</div>
           <div className="operate-col">
-            <span onClick={() => deleteCart(item.id)}>&times;</span>
+            <span onClick={() => deleteCart(item.courseId)}>&times;</span>
           </div>
         </li>
       );
@@ -100,7 +100,7 @@ const Cart = (props) => {
   };
   const toConfirm = () => {
     const checkedAll = newList.filter((item) => item.checked);
-    props.history.push({ pathname: '/order/confirm', state: { selectedList: checkedAll } });
+    props.history.push({ pathname: '/order/confirm', state: { userId, selectedList: checkedAll } });
   };
   return (
     <>

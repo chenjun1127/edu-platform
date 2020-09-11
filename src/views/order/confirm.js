@@ -2,16 +2,19 @@ import React from 'react';
 import TopBar from '../../components/TopBar';
 import { withRouter } from 'react-router-dom';
 import { formatPrice } from '../../assets/js/utils';
-import { Button } from 'antd';
+import { orderPlace } from '../../api/main';
+import { Button, message } from 'antd';
 const Confirm = (props) => {
-  const list = props.location.state.selectedList;
+  const { selectedList, userId } = props.location.state;
+  let productIds = [];
   let payMoney = 0;
-  for (let i = 0; i < list.length; i++) {
-    payMoney += list[i].course.price;
+  for (let i = 0; i < selectedList.length; i++) {
+    payMoney += selectedList[i].course.price;
+    productIds.push(selectedList[i].courseId);
   }
 
   const renderCartList = () => {
-    return list.map((item) => {
+    return selectedList.map((item) => {
       return (
         <li key={item.id}>
           <div className="course-col">
@@ -24,7 +27,13 @@ const Confirm = (props) => {
     });
   };
   const toCalcMoney = () => {
-    console.log(11);
+    orderPlace({ userId, productIds }).then((res) => {
+      if (res.data.code === 0) {
+        props.history.push({ pathname: '/order/pay', state: { productIds:productIds.toString() } });
+      } else {
+        message.info(res.data.msg);
+      }
+    });
   };
   return (
     <>
@@ -40,7 +49,7 @@ const Confirm = (props) => {
             {renderCartList()}
             <li>
               <p>
-                共{list.length}件商品，总计金额：<span>￥{formatPrice(payMoney)}</span>
+                共{selectedList.length}件商品，总计金额：<span>￥{formatPrice(payMoney)}</span>
               </p>
               <p>
                 应付：<span>￥{formatPrice(payMoney)}</span>

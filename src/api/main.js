@@ -30,4 +30,38 @@ export const deleteCartById = (params) => {
   });
 };
 
- 
+export const orderPlace = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.post('/v1/order/place', params).then(resolve).catch(reject);
+  });
+};
+
+export const inquireIsBuy = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/order/inquireIsBuy', params).then(resolve).catch(reject);
+  });
+};
+
+export const getAllOrder = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/order/all', params).then(resolve).catch(reject);
+  });
+};
+
+export const getOrderToPay = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/order/orderToPay', params).then(resolve).catch(reject);
+  });
+};
+
+export const updateOrder = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.post('/v1/order/update', params).then(resolve).catch(reject);
+  });
+};
+
+export const delOrderById = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.delete('/v1/order/del', params).then(resolve).catch(reject);
+  });
+};

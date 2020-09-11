@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-const createHistory = require('history').createHashHistory;
 // 创建axios实例
 const $axios = axios.create({
   timeout: 30000,
@@ -47,19 +45,10 @@ $axios.interceptors.request.use(
 // response拦截器
 $axios.interceptors.response.use(
   (response) => {
-    // console.log(process.env.NODE_ENV);
-    if (response.data && response.data.code === '302') {
-      // 302, token失效，此处有坑，开发环境只能重定向到登录页（实际上微信关联了账号的，是要跳转到首页），生产环境要跳转到后台定义的重定向地址；
-      if (process.env.NODE_ENV === 'development') {
-        const history = createHistory();
-        setTimeout(() => {
-          history.replace('/login');
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          // window.location.href = JSON.parse(sessionStorage.getItem('info')).url + '/yihao01-park-payment/newLogin/index';
-        }, 1000);
-      }
+    if (response.data && response.data.code >= 40300) {
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1000);
     }
     return response;
   },
