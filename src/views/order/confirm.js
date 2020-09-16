@@ -1,6 +1,6 @@
 import React from 'react';
 import TopBar from '../../components/TopBar';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { formatPrice } from '../../assets/js/utils';
 import { orderPlace } from '../../api/main';
 import { Button, message } from 'antd';
@@ -19,7 +19,9 @@ const Confirm = (props) => {
         <li key={item.id}>
           <div className="course-col">
             <img src={item.course.coverImg} alt={item.course.title} />
-            <p>{item.course.title}</p>
+            <p>
+              <Link to={`/detail/${item.courseId}`}>{item.course.title}</Link>
+            </p>
           </div>
           <div className="money-col">￥{formatPrice(item.course.price)}</div>
         </li>
@@ -29,7 +31,7 @@ const Confirm = (props) => {
   const toCalcMoney = () => {
     orderPlace({ userId, productIds }).then((res) => {
       if (res.data.code === 0) {
-        props.history.push({ pathname: '/order/pay', state: { productIds:productIds.toString() } });
+        props.history.push({ pathname: '/order/pay', state: { productIds: productIds.toString() } });
       } else {
         message.info(res.data.msg);
       }

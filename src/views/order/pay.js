@@ -1,21 +1,18 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar';
 import CommonModal from '../../components/CommonModal';
 import { message, Button } from 'antd';
 import { AppContext } from '../../hooks/context';
 import { getOrderToPay, updateOrder } from '../../api/main';
 import { formatPrice } from '../../assets/js/utils';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 const Pay = (props) => {
   const { productIds } = props.location.state;
   const { state } = useContext(AppContext);
   const [dataObj, setDataObj] = useState({});
   const [visible, setVisible] = useState(false);
-  const [show, setShow] = useState(false);
-  const [msg, setMsg] = useState('');
-  let maxtime = 10 * 60;
-  let timer = useRef();
   const userId = state.userReducer.userInfo && state.userReducer.userInfo.id;
+
   useEffect(() => {
     const getPay = () => {
       if (userId) {
@@ -29,23 +26,21 @@ const Pay = (props) => {
       }
     };
     getPay();
-  }, [productIds, userId]);
-  const toPay = () => {
-    setShow(true);
-    timer.current = setInterval(() => {
-      if (maxtime >= 0) {
-        let minutes = Math.floor(maxtime / 60);
-        let seconds = Math.floor(maxtime % 60);
-        let msg = '请在' + minutes + '分' + seconds + '秒内支付';
-        setMsg(msg);
-        --maxtime;
-      } else {
-        clearInterval(timer.current);
-      }
-    }, 1000);
-  };
+  }, [productIds, props.history, userId]);
+
   const toCancel = () => {
     setVisible(true);
+  };
+  // 模拟支付随机生成
+  const toPay = () => {
+    const arr = [1, 3];
+    updateOrder({ userId, productIds, status: arr[Math.floor(Math.random() * arr.length)] }).then((res) => {
+      if (res.data.code === 0) {
+        props.history.push('/order/center');
+      } else {
+        message.info(res.data.msg);
+      }
+    });
   };
 
   const renderList = () => {
@@ -57,7 +52,9 @@ const Pay = (props) => {
             <div key={ele.id}>
               <img src={ele.course.coverImg} alt={ele.course.title} />
               <div>
-                <p>{ele.course.title}</p>
+                <p>
+                  <Link to={`/detail/${ele.course.id}`}>{ele.course.title}</Link>
+                </p>
                 <p>￥{formatPrice(ele.course.price)}</p>
               </div>
             </div>
@@ -100,28 +97,6 @@ const Pay = (props) => {
       }
     });
   };
-  const toComplete = () => {
-    updateOrder({ userId, productIds, status: 1 }).then((res) => {
-      if (res.data.code === 0) {
-        setShow(false);
-        clearInterval(timer.current);
-        props.history.push('/order/center');
-      } else {
-        message.info(res.data.msg);
-      }
-    });
-  };
-  const handlePayFail = () => {
-    updateOrder({ userId, productIds, status: 0 }).then((res) => {
-      if (res.data.code === 0) {
-        setShow(false);
-        clearInterval(timer.current);
-        props.history.push('/order/center');
-      } else {
-        message.info(res.data.msg);
-      }
-    });
-  };
   return (
     <>
       <TopBar></TopBar>
@@ -134,7 +109,6 @@ const Pay = (props) => {
         </div>
       </div>
       <CommonModal width={400} visible={visible} closable={false} maskClosable={false} keyboard={false} component={<ModalContent {...props} cancel={handleCancel} enter={() => toPay()} />} handleCancel={handleCancel} />
-      <CommonModal width={400} visible={show} closable={false} maskClosable={false} keyboard={false} component={<ModalContentPay {...props} cancel={handlePayFail} enter={() => toComplete()} msg={msg} />} handleCancel={handleCancel} />
     </>
   );
 };
@@ -153,19 +127,5 @@ const ModalContent = (props) => {
     </div>
   );
 };
-const ModalContentPay = (props) => {
-  return (
-    <div className="modal-cart-content">
-      <div className="pay-count-time">{props.msg}</div>
-      <div>
-        <Button size="large" shape="round" onClick={() => props.cancel(false)}>
-          支付失败
-        </Button>
-        <Button type="primary" size="large" danger shape="round" onClick={() => props.enter()}>
-          支付完成
-        </Button>
-      </div>
-    </div>
-  );
-};
+
 export default withRouter(Pay);

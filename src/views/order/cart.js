@@ -4,7 +4,7 @@ import { AppContext } from '../../hooks/context';
 import { getCartList, deleteCartById } from '../../api/main';
 import { formatPrice } from '../../assets/js/utils';
 import { message, Button } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 const Cart = (props) => {
   const { state, dispatch } = useContext(AppContext);
   const [selectedAll, setSelectedAll] = useState(true);
@@ -56,7 +56,9 @@ const Cart = (props) => {
           </div>
           <div className="course-col">
             <img src={item.course.coverImg} alt={item.course.title} />
-            <p>{item.course.title}</p>
+            <p>
+              <Link to={`/detail/${item.courseId}`}>{item.course.title}</Link>
+            </p>
           </div>
           <div className="money-col">￥{formatPrice(item.course.price)}</div>
           <div className="operate-col">

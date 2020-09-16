@@ -38,7 +38,7 @@ const Cart = (props) => {
         <li key={item.id}>
           <img src={item.course.coverImg} alt={item.course.title} />
           <div>
-            <p>{item.course.title}</p>
+            <p><Link to={`/detail/${item.courseId}`}>{item.course.title}</Link></p>
             <p>
               <span>￥{formatPrice(item.course.price)}</span>
               <em onClick={() => deleteCart(item.courseId)}>删除</em>

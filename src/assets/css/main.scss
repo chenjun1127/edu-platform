@@ -2,7 +2,14 @@ $activeColor: #1890ff;
 $borderColor: #d9d9d9;
 $redColor: #ef4d4f;
 $grayColor: #717a84;
+$mainColor: rgba(0, 0, 0, 0.65);
 $width: 1250px;
+.link {
+  color: $mainColor;
+  &:hover {
+    color: $activeColor;
+  }
+}
 .loading-container {
   position: absolute;
   left: 50%;
@@ -17,6 +24,7 @@ $width: 1250px;
     font-size: 24px;
   }
 }
+
 .app-container {
   box-sizing: border-box;
   display: flex;
@@ -265,6 +273,20 @@ $width: 1250px;
 .app-body {
   width: $width;
   margin: 20px auto;
+}
+.refresh {
+  position: fixed;
+  right: 5%;
+  bottom: 8%;
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
 .main-list {
   display: flex;
@@ -545,6 +567,9 @@ $width: 1250px;
         flex: 1;
 
         p {
+          a {
+            @extend .link;
+          }
           &:first-child {
             height: 46px;
             display: flex;
@@ -640,6 +665,9 @@ $width: 1250px;
       p {
         margin-bottom: 0;
         margin-left: 20px;
+        a {
+          @extend .link;
+        }
       }
     }
     .money-col {
@@ -724,6 +752,7 @@ $width: 1250px;
   border-radius: 10px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.18);
   padding: 0 20px;
+  padding-bottom: 5px;
   .order-list {
     .no-data {
       display: flex;
@@ -758,6 +787,11 @@ $width: 1250px;
             margin-bottom: 20px;
             &:last-child {
               margin-bottom: 0;
+            }
+            p {
+              a {
+                @extend .link;
+              }
             }
             img {
               width: 150px;
@@ -841,7 +875,7 @@ $width: 1250px;
             transform: translateY(-50%);
           }
           span {
-            padding: 0 15px;
+            width: 88px;
             height: 32px;
             display: flex;
             align-items: center;
@@ -876,6 +910,11 @@ $width: 1250px;
       }
     }
   }
+  .main-pagination {
+    padding-bottom: 10px;
+  }
 }
 
-.pay-count-time{color: $redColor;}
+.pay-count-time {
+  color: $redColor;
+}

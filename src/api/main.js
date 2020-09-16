@@ -1,5 +1,11 @@
 import $axios from '../axios/$axios';
 
+export const createCourse = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/course/createCourse', params).then(resolve).catch(reject);
+  });
+};
+
 export const getAllCourse = (params) => {
   return new Promise((resolve, reject) => {
     $axios.get('/v1/course/all', params).then(resolve).catch(reject);

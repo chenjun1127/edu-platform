@@ -15,7 +15,8 @@ const Detail = (props) => {
   const [data, setData] = useState({});
   const { state, dispatch } = useContext(AppContext);
   const [visible, setVisible] = useState(false);
-  const [isBuy, setIsBuy] = useState(false);
+  const [status, setStatus] = useState(0);
+  const [flag, setFlag] = useState(false);
   const userInfo = state.userReducer.userInfo;
   const couterRef = useRef();
   var pattern = Trianglify({
@@ -35,7 +36,7 @@ const Detail = (props) => {
       if (userInfo) {
         inquireIsBuy({ params: { userId: userInfo.id, productId: props.match.params.id } }).then((res) => {
           if (res.data.code === 0) {
-            res.data.data && setIsBuy(true);
+            setStatus(res.data.data.status);
           }
         });
       }
@@ -68,19 +69,28 @@ const Detail = (props) => {
     setVisible(value);
   };
   const renderBtn = () => {
-    if (!userInfo || !isBuy) {
+    if (!userInfo || status === 0 || status === 2) {
       return (
         <Button type="primary" danger size="large" shape="round" onClick={() => addCart(data)}>
           加入购物车
         </Button>
       );
-    } else {
+    } else if (status === 1) {
       return (
-        <Button type="primary" danger size="large" shape="round" onClick={() => props.history.push('/order/center')}>
+        <Button type="primary" danger size="large" shape="round" onClick={() => setFlag(true)}>
           去学习
         </Button>
       );
+    } else if (status === 3) {
+      return (
+        <Button type="primary" danger size="large" shape="round" onClick={() => props.history.push('/order/center')}>
+          去支付
+        </Button>
+      );
     }
+  };
+  const handleCancelAlert = (value) => {
+    setFlag(value);
   };
   return (
     <>
@@ -114,6 +124,7 @@ const Detail = (props) => {
       </div>
       <Footer></Footer>
       <CommonModal width={400} visible={visible} component={<ModalContent {...props} cancel={handleCancel} />} handleCancel={handleCancel} />
+      <CommonModal width={400} visible={flag} component={<ModalContentAlert {...props} cancel={handleCancelAlert} />} handleCancel={handleCancelAlert} />
     </>
   );
 };
@@ -127,6 +138,18 @@ const ModalContent = (props) => {
         </Button>
         <Button type="primary" size="large" danger shape="round" onClick={() => props.history.push('/order/cart')}>
           去购物车
+        </Button>
+      </div>
+    </div>
+  );
+};
+const ModalContentAlert = (props) => {
+  return (
+    <div className="modal-cart-content">
+      <div>该功能暂未开发，敬请期待！</div>
+      <div>
+        <Button size="large" shape="round" danger onClick={() => props.cancel(false)}>
+          继续逛逛
         </Button>
       </div>
     </div>

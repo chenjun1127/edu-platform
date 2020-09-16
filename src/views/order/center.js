@@ -22,6 +22,9 @@ const Center = () => {
               <TabPane tab="已取消" key="3">
                 <Detail status="2" />
               </TabPane>
+              <TabPane tab="支付失败" key="4">
+                <Detail status="3" />
+              </TabPane>
             </Tabs>
           </div>
         </div>
