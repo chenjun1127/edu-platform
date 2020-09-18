@@ -1,7 +1,7 @@
 import axios from 'axios';
 // 创建axios实例
 const $axios = axios.create({
-  timeout: 30000,
+  timeout: 80000,
   // 允许跨域带token
   withCredentials: true,
   baseURL: 'http://localhost:6180/edu-platform/api',

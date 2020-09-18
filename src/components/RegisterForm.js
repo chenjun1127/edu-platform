@@ -12,6 +12,7 @@ const RegisterForm = (props) => {
   const onFinish = (values) => {
     register({ name: values.username, password: values.password, verifyCode: values.captcha, email: values.email }).then((res) => {
       if (res.data.code === 0) {
+        dispatch({ type: 'operate', data: { status: 1, visible: false, title: '注册', width: 400 } });
         props.history.push({ pathname: '/active', query: { name: values.username, email: values.email, url: window.location.href } });
       } else {
         message.info(res.data.msg);
