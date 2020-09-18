@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import UserCenter from './UserCenter';
-const menu = [
-  {
-    text: '首页',
-    path: '/',
-  },
-  {
-    text: '课程展示',
-    path: '/course',
-  },
-  {
-    text: '后台管理',
-    path: '/admin',
-  },
-  {
-    text: '个人中心',
-    path: '/user',
-  },
-];
+import { AppContext } from '../hooks/context';
+
 const TopBar = () => {
+  const { state } = useContext(AppContext);
+  const { userInfo } = state.userReducer;
+  const menu = [
+    {
+      text: '首页',
+      path: '/',
+    },
+    {
+      text: '课程展示',
+      path: '/course',
+    },
+    {
+      text: '后台管理',
+      path: '/admin',
+    },
+    {
+      text: '个人中心',
+      path: userInfo ? '/user/center/' + userInfo.id : '/user/center',
+    },
+  ];
   const renderMenu = () => {
     return menu.map((item, index) => {
       return (

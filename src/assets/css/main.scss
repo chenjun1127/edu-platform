@@ -617,6 +617,11 @@ $width: 1250px;
     }
   }
 }
+.modal-common-content {
+  > div {
+    padding: 30px 0 0 0;
+  }
+}
 .app-body-cart {
   background: url(../images/cart-header-bg.jpg) repeat-x top;
   .cart-list-container {
@@ -917,4 +922,69 @@ $width: 1250px;
 
 .pay-count-time {
   color: $redColor;
+}
+.user-profile {
+  position: relative;
+  .edit-icon {
+    position: absolute;
+    cursor: pointer;
+    right: 24px;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 3px;
+    }
+  }
+  ul {
+    li {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      div {
+        &:first-child {
+          width: 7%;
+          text-align: right;
+          font-weight: bold;
+        }
+        &:last-child {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+.user-course-list {
+  margin-right: 24px;
+  li {
+    display: flex;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba($borderColor, 0.7);
+    img {
+      width: 150px;
+      height: 84px;
+      & + div {
+        flex: 1;
+        margin: 0 20px;
+        h1 {
+          font-size: 16px;
+          a {
+            @extend .link;
+          }
+        }
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+    div {
+      &:last-child {
+        width: 200px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  }
 }

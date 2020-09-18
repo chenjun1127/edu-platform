@@ -71,3 +71,9 @@ export const delOrderById = (params) => {
     $axios.delete('/v1/order/del', params).then(resolve).catch(reject);
   });
 };
+
+export const getOrderDetailList = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/order/getOrderDetailList', params).then(resolve).catch(reject);
+  });
+};

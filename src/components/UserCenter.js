@@ -3,7 +3,7 @@ import OperateModal from './OperateModal';
 import { AppContext } from '../hooks/context';
 import { getUserById } from '../api/base';
 import { message } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Cart from './Cart';
 const UserCenter = (props) => {
   const { state, dispatch } = useContext(AppContext);
@@ -38,9 +38,8 @@ const UserCenter = (props) => {
   const exit = () => {
     localStorage.clear();
     dispatch({ type: 'logout' });
-    dispatch({ type: 'clean' });    
+    dispatch({ type: 'clean' });
     props.history.replace('/');
-
   };
   const { userInfo } = state.userReducer;
   return (
@@ -49,9 +48,14 @@ const UserCenter = (props) => {
       {userInfo ? (
         <div className="user-info">
           <p>
-            欢迎您，<span>{userInfo.name}</span>
+            欢迎您，
+            <span>
+              <Link to={`/user/center/${userInfo.id}`}>{userInfo.name}</Link>
+            </span>
           </p>
-          <img src={userInfo.headImg ? userInfo.headImg : require('../assets/images/default-head.png')} alt="头像" />
+          <Link to={`/user/center/${userInfo.id}`}>
+            <img src={userInfo.headImg ? userInfo.headImg : require('../assets/images/default-head.png')} alt="头像" />
+          </Link>
           <span onClick={exit}>退出</span>
         </div>
       ) : (

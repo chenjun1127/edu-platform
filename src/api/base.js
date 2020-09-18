@@ -53,3 +53,15 @@ export const getLinkStatus = (params) => {
     $axios.get('/v1/user/getLinkStatus', params).then(resolve).catch(reject);
   });
 };
+
+export const getAreaData = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/getAreaData', params).then(resolve).catch(reject);
+  });
+};
+
+export const updateUser = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.post('/v1/user/update', params).then(resolve).catch(reject);
+  });
+};
