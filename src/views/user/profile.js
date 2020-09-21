@@ -36,7 +36,7 @@ const Profile = (props) => {
     });
   };
   const handleSubmit = (value) => {
-    const areaName = value.areaName.join('-');
+    const areaName = Object.prototype.toString.call(value.areaName) === '[object Array]' ? value.areaName.join('-') : value.areaName;
     const areaCode = value.areaCode.join('-');
     updateUser({ ...value, id: userInfo.id, areaName, areaCode }).then((res) => {
       if (res.data.code === 0) {
@@ -89,8 +89,7 @@ const ModalContent = (props) => {
   const areaNameArr = [];
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    // console.log('Received values of form: ', values);
-    props.submit({ ...values, areaName: areaNameArr });
+    props.submit({ ...values, areaName: areaNameArr.length === 0 ? props.userInfo.areaName : areaNameArr });
   };
   const cancelForm = () => {
     props.cancel(false);
@@ -102,23 +101,30 @@ const ModalContent = (props) => {
       areaNameArr.push(ele.name);
     });
   };
+  const initialValues = {
+    name: props.userInfo.name,
+    sex: props.userInfo.sex,
+    areaCode: props.userInfo.areaCode.split('-'),
+    sign: props.userInfo.sign,
+    phone: props.userInfo.phone,
+  };
   return (
     <div className="modal-common-content">
       <div>
-        <Form ref={props.form} onFinish={onFinish} form={form} labelCol={{ span: 4 }} name="modal-form" initialValues={{ sex: '0' }}>
-          <Form.Item name="phone" label="手机号码" rules={[{ message: '手机号码不正确', pattern: /^1[3456789]\d{9}$/ }]} initialValues={props.userInfo.name} >
+        <Form ref={props.form} onFinish={onFinish} form={form} labelCol={{ span: 4 }} name="modal-form" initialValues={initialValues}>
+          <Form.Item name="phone" label="手机号码" rules={[{ message: '手机号码不正确', pattern: /^1[3456789]\d{9}$/ }]}>
             <Input />
           </Form.Item>
-          <Form.Item initialValues={props.userInfo.sex} name="sex" label="姓别">
+          <Form.Item name="sex" label="姓别">
             <Radio.Group>
-              <Radio value="0">女</Radio>
-              <Radio value="1">男</Radio>
+              <Radio value={0}>女</Radio>
+              <Radio value={1}>男</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item initialValues={props.userInfo.areaCode.split('-')} name="areaCode" label="地区">
+          <Form.Item name="areaCode" label="地区">
             <Cascader options={props.list} onChange={onChange} fieldNames={{ label: 'name', value: 'code' }} />
           </Form.Item>
-          <Form.Item initialValues={props.userInfo.sign} name="sign" label="个姓签名">
+          <Form.Item name="sign" label="个姓签名">
             <Input.TextArea type="textarea" rows={4} />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 20, offset: 4 }}>
