@@ -6,6 +6,7 @@ import { AppContext } from '../../hooks/context';
 import { getOrderToPay, updateOrder } from '../../api/main';
 import { formatPrice } from '../../assets/js/utils';
 import { withRouter, Link } from 'react-router-dom';
+import Footer from '../../components/Footer';
 const Pay = (props) => {
   const { productIds } = props.location.state;
   const { state } = useContext(AppContext);
@@ -108,6 +109,7 @@ const Pay = (props) => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
       <CommonModal width={400} visible={visible} closable={false} maskClosable={false} keyboard={false} component={<ModalContent {...props} cancel={handleCancel} enter={() => toPay()} />} handleCancel={handleCancel} />
     </>
   );

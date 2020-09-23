@@ -34,6 +34,13 @@ $width: 1250px;
   padding: 15px 0;
   border-top: 1px solid $borderColor;
   text-align: center;
+  background: #fff;
+}
+.footer-fixed {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 .app-top {
   background: #fff;
@@ -765,6 +772,7 @@ $width: 1250px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.18);
   padding: 0 20px;
   padding-bottom: 5px;
+  margin-bottom: 20px;
   .order-list {
     .no-data {
       display: flex;

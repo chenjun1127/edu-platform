@@ -1,13 +1,10 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
 import Top from '../../components/Top';
 import Footer from '../../components/Footer';
 import { withRouter } from 'react-router-dom';
-// const Main = lazy(() => import('./main'));
-
-const Main = lazy(() => import('./main'));
-
-const Index = (props) => {
+import Main from './main';
+const Index = () => {
   return (
     <>
       <Top></Top>

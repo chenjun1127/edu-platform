@@ -5,12 +5,17 @@ import { getCartList, deleteCartById } from '../../api/main';
 import { formatPrice } from '../../assets/js/utils';
 import { message, Button } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
+import Footer from '../../components/Footer';
 const Cart = (props) => {
   const { state, dispatch } = useContext(AppContext);
   const [selectedAll, setSelectedAll] = useState(true);
   const [newList, setNewList] = useState([]);
   const [totalMoney, setTotalMoney] = useState(0);
   const userId = state.userReducer.userInfo && state.userReducer.userInfo.id;
+  const [isFixed, setIsFixed] = useState(true);
+  const func = (value) => {
+    setIsFixed(!value ? true : false);
+  };
   const getCart = useCallback(() => {
     if (userId) {
       getCartList({ params: { userId } }).then((res) => {
@@ -40,6 +45,10 @@ const Cart = (props) => {
     deleteCartById({ data: { ids: [id], userId } }).then((res) => {
       if (res.data.code === 0) {
         getCart();
+        // console.log(document.documentElement.scrollTop);
+        if (document.documentElement.scrollTop < 105) {
+          setIsFixed(true);
+        }
       } else {
         message.info(res.data.msg);
       }
@@ -136,6 +145,7 @@ const Cart = (props) => {
           )}
         </div>
       </div>
+      <Footer func={func} isFixed={isFixed}></Footer>
     </>
   );
 };

@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopBar from '../../components/TopBar';
 import { Tabs } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Detail from './detail';
+import Footer from '../../components/Footer';
 const { TabPane } = Tabs;
+
 const Center = () => {
+  const [isFixed, setIsFixed] = useState(true);
+  const func = (value) => {
+    setIsFixed(!value ? true : false);
+  };
+  const handleChange = () => {
+    func();
+  };
   return (
     <>
       <TopBar></TopBar>
@@ -12,7 +21,7 @@ const Center = () => {
         <div className="cart-list-container">
           <div className="app-public-title">我的订单</div>
           <div className="app-order-container">
-            <Tabs defaultActiveKey="1" size="large">
+            <Tabs defaultActiveKey="1" size="large" onChange={handleChange}>
               <TabPane tab="全部订单" key="1">
                 <Detail status="0" />
               </TabPane>
@@ -29,6 +38,7 @@ const Center = () => {
           </div>
         </div>
       </div>
+      <Footer func={func} isFixed={isFixed}></Footer>
     </>
   );
 };

@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-const Footer = () => {
-  const getWindowSize = () => ({
-    innerHeight: window.innerHeight,
-    innerWidth: window.innerWidth,
-  });
-  const [windowSize, setWindowSize] = useState(getWindowSize());
-  const handleResize = () => {
-    setWindowSize(getWindowSize());
+import React, { useEffect } from 'react';
+const Footer = (props) => {
+  const handleScroll = () => {
+    let scrollTop = document.documentElement.scrollTop; // 滚动条滚动高度
+    if (scrollTop > 0) {
+      props.func && props.func(true);
+    }
   };
-  console.log(windowSize)
+
   useEffect(() => {
     // 监听
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
     // 销毁
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener('scroll', handleScroll);
   });
-  return <div className="app-footer">jone-chen版权所有© 2020</div>;
+
+  return <div className={`app-footer ${props.isFixed ? 'footer-fixed' : ''}`}>jone-chen版权所有© 2020</div>;
 };
 export default Footer;

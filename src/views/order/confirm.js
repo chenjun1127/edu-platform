@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { formatPrice } from '../../assets/js/utils';
 import { orderPlace } from '../../api/main';
 import { Button, message } from 'antd';
+import Footer from '../../components/Footer';
 const Confirm = (props) => {
   const { selectedList, userId } = props.location.state;
   let productIds = [];
@@ -63,6 +64,7 @@ const Confirm = (props) => {
           </ul>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };
