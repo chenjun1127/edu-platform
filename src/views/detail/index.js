@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import React, { useRef, useEffect, useState, useContext, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AppContext } from '../../hooks/context';
 import CommonModal from '../../components/CommonModal';
@@ -24,14 +24,14 @@ const Detail = (props) => {
     height: 300,
   });
   couterRef.current && !document.querySelector('canvas') && couterRef.current.appendChild(pattern.canvas());
+  const getDetail = useCallback(() => {
+    getCourseById({ id: props.match.params.id }).then((res) => {
+      if (res.data.code === 0) {
+        setData({ ...res.data.data });
+      }
+    });
+  }, [props.match.params.id]);
   useEffect(() => {
-    const getDetail = () => {
-      getCourseById({ id: props.match.params.id }).then((res) => {
-        if (res.data.code === 0) {
-          setData({ ...res.data.data });
-        }
-      });
-    };
     const getInquireIsBuy = () => {
       if (userInfo) {
         inquireIsBuy({ params: { userId: userInfo.id, productId: props.match.params.id } }).then((res) => {
@@ -43,7 +43,7 @@ const Detail = (props) => {
     };
     getDetail();
     getInquireIsBuy();
-  }, [props.match.params.id, userInfo]);
+  }, [getDetail, props.match.params.id, userInfo]);
 
   const addCart = (item) => {
     if (!userInfo) {
@@ -92,6 +92,9 @@ const Detail = (props) => {
   const handleCancelAlert = (value) => {
     setFlag(value);
   };
+  const refreshData = () => {
+    getDetail();
+  };
   return (
     <>
       <Top></Top>
@@ -118,7 +121,7 @@ const Detail = (props) => {
             {Object.keys(data).length && <Chapters data={data} />}
           </TabPane>
           <TabPane tab="用户评价" key="2">
-            {Object.keys(data).length && <Appraises data={data} />}
+            {Object.keys(data).length && <Appraises data={data} status={status} func={refreshData} />}
           </TabPane>
         </Tabs>
       </div>

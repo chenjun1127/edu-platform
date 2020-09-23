@@ -77,3 +77,15 @@ export const getOrderDetailList = (params) => {
     $axios.get('/v1/order/getOrderDetailList', params).then(resolve).catch(reject);
   });
 };
+
+export const releaseAppraise = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.post('/v1/appraise/release', params).then(resolve).catch(reject);
+  });
+};
+
+export const getAppraiseList = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/appraise/list', params).then(resolve).catch(reject);
+  });
+};

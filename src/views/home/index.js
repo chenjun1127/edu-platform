@@ -1,8 +1,6 @@
 import React, { lazy } from 'react';
 
 import Top from '../../components/Top';
-// import Top from '../../components/Top';
-// import Content from '../../components/Content';
 import Footer from '../../components/Footer';
 import { withRouter } from 'react-router-dom';
 // const Main = lazy(() => import('./main'));

@@ -12,14 +12,6 @@ const TopBar = () => {
       path: '/',
     },
     {
-      text: '课程展示',
-      path: '/course',
-    },
-    {
-      text: '后台管理',
-      path: '/admin',
-    },
-    {
       text: '个人中心',
       path: userInfo ? '/user/center/' + userInfo.id : '/user/center',
     },

@@ -36,35 +36,43 @@ $width: 1250px;
   text-align: center;
 }
 .app-top {
-  display: flex;
-  align-items: center;
   background: #fff;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.18);
-  justify-content: space-between;
-  .menu {
+  .app-top-inner {
+    width: 1250px;
+    margin: 0 auto;
     display: flex;
-    margin: 0;
-    height: 80px;
-    // border-bottom: 1px solid $borderColor;
-    background: white;
-    li {
-      > a {
-        padding: 0 15px;
-        height: 80px;
-        line-height: 80px;
-        font-size: 16px;
+    align-items: center;
+    justify-content: space-between;
+    .menu {
+      display: flex;
+      margin: 0;
+      height: 80px;
+      // border-bottom: 1px solid $borderColor;
+      background: white;
+      li {
+        > a {
+          padding: 0 15px;
+          height: 80px;
+          line-height: 80px;
+          font-size: 16px;
+          color: $mainColor;
+          &:hover {
+            color: $activeColor;
+          }
+        }
       }
     }
-  }
-  .search {
-    .ant-input-group-wrapper {
-      display: flex;
-      align-items: center;
+    .search {
+      .ant-input-group-wrapper {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
 .user-right {
-  padding-right: 20px;
+  padding-right: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -985,5 +993,48 @@ $width: 1250px;
         align-items: center;
       }
     }
+  }
+}
+
+.appraise-editor {
+  .rate-box {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    > span {
+      margin-right: 20px;
+      padding-top: 5px;
+    }
+  }
+  .appraise-list {
+    display: flex;
+    > span {
+      width: 32p;
+      margin-right: 12px;
+    }
+    .appraise-content {
+      flex: 1;
+      .appraise-title {
+        display: flex;
+        border-bottom: 1px dashed #e6d8d8;
+        padding-bottom: 8px;
+        position: relative;
+        align-items: center;
+        em {
+          font-style: normal;
+          margin: 0 3px;
+        }
+      }
+    }
+    .appraise-rate {
+      padding-top: 10px;
+    }
+    .appraise-text {
+      padding: 10px 0;
+    }
+  }
+  .appraise-no {
+    text-align: center;
+    padding: 15px 0;
   }
 }

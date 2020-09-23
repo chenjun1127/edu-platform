@@ -4,14 +4,11 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { AppContext, userReducer, operateReducer, shoppingCartReducer, initUserState, initOperateState, initShoppingCartState } from '../hooks/context';
 import { combineReducers } from '../assets/js/utils';
 import PrivateRoute from '../components/PrivateRoute';
- 
-
 
 const Home = lazy(() => import('../views/home/index'));
 const UserActive = lazy(() => import('../views/user/active'));
 const NoMatch = lazy(() => import('../views/404'));
 const User = lazy(() => import('../views/user/index'));
-const Course = lazy(() => import('../views/course/index'));
 const Success = lazy(() => import('../views/success'));
 const Fail = lazy(() => import('../views/fail'));
 const FindPassword = lazy(() => import('../views/user/find-password'));
@@ -46,7 +43,6 @@ const Routes = () => {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/active" component={UserActive} />
-              <Route path="/course" component={Course} />
               <Route path="/success" component={Success} />
               <Route path="/fail" component={Fail} />
               <Route path="/password" exact component={FindPassword} />

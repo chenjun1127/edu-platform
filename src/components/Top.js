@@ -12,15 +12,7 @@ const Top = () => {
     {
       text: '首页',
       path: '/',
-    },
-    {
-      text: '课程展示',
-      path: '/course',
-    },
-    {
-      text: '后台管理',
-      path: '/admin',
-    },
+    },  
     {
       text: '个人中心',
       path: userInfo ? '/user/center/' + userInfo.id : '/user/center',
@@ -37,11 +29,13 @@ const Top = () => {
   };
   return (
     <div className="app-top">
+      <div className="app-top-inner">
       <ul className="menu">{renderMenu()}</ul>
       <div className="search">
         <Search placeholder="输入关键字" enterButton="搜索" onSearch={(value) => console.log(value)} style={{ width: 400, height: 60 }} />
       </div>
       <UserCenter></UserCenter>
+      </div>
     </div>
   );
 };

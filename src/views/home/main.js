@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { getAllCourse, createCourse } from '../../api/main';
 import { Pagination, message } from 'antd';
-import { SyncOutlined, LoadingOutlined } from '@ant-design/icons';
+import { SyncOutlined } from '@ant-design/icons';
 import { formatPrice } from '../../assets/js/utils';
 import { Link } from 'react-router-dom';
 const Main = () => {
@@ -11,7 +11,7 @@ const Main = () => {
   const [spin, setSpin] = useState(false);
   const size = 12;
   const getList = useCallback(() => {
-    getAllCourse({ params: { page, size } }).then((res) => {
+    getAllCourse({ params: { pageNo: page, pageSize: size } }).then((res) => {
       if (res.data.code === 0) {
         setList(res.data.data.list);
         setTotal(res.data.data.total);
@@ -65,7 +65,6 @@ const Main = () => {
       <div className="app-body">
         <ul className="main-list"> {rendList()}</ul>
         {total > 0 && <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onChange} />}
-        <LoadingOutlined />
       </div>
       <div className="refresh" onClick={handRefresh}>
         <SyncOutlined style={{ fontSize: '22px', color: '#1890ff' }} title="同步最新数据" spin={spin} />
