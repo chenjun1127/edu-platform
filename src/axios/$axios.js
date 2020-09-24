@@ -4,7 +4,7 @@ const $axios = axios.create({
   timeout: 80000,
   // 允许跨域带token
   withCredentials: true,
-  baseURL: 'http://localhost:6180/edu-platform/api',
+  baseURL: `${process.env.NODE_ENV === 'development' ? 'http://localhost:6180' : 'http://119.29.165.98'}/edu-platform-server/api`,
 });
 // 设置缓存时间 和缓存请求数组
 $axios.defaults.withCredentials = true;
