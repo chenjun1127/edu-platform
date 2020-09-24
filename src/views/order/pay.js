@@ -13,7 +13,10 @@ const Pay = (props) => {
   const [dataObj, setDataObj] = useState({});
   const [visible, setVisible] = useState(false);
   const userId = state.userReducer.userInfo && state.userReducer.userInfo.id;
-
+  const [isFixed, setIsFixed] = useState(true);
+  const func = (value) => {
+    setIsFixed(!value ? true : false);
+  };
   useEffect(() => {
     const getPay = () => {
       if (userId) {
@@ -109,7 +112,7 @@ const Pay = (props) => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer func={func} isFixed={isFixed}></Footer>
       <CommonModal width={400} visible={visible} closable={false} maskClosable={false} keyboard={false} component={<ModalContent {...props} cancel={handleCancel} enter={() => toPay()} />} handleCancel={handleCancel} />
     </>
   );

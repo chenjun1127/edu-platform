@@ -1,13 +1,14 @@
-import React, { useContext, useState ,useRef} from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, LockOutlined, SafetyOutlined, MailOutlined } from '@ant-design/icons';
 import { AppContext } from '../hooks/context';
 import { register } from '../api/base';
 import { withRouter } from 'react-router-dom';
-
+import config from '../config';
 const RegisterForm = (props) => {
+  const envPrefix = process.env.NODE_ENV === 'development' ? config.devApi : config.prodApi;
   const { dispatch } = useContext(AppContext);
-  const [verifyCodeUrl, setVerifyCodeUrl] = useState(`http://localhost:6180/edu-platform/api/v1/getVerifyCode?t=${Date.now()}`);
+  const [verifyCodeUrl, setVerifyCodeUrl] = useState(`${envPrefix}/${config.serverName}/api/v1/getVerifyCode?t=${Date.now()}`);
   const registerForm = useRef();
   const onFinish = (values) => {
     register({ name: values.username, password: values.password, verifyCode: values.captcha, email: values.email }).then((res) => {
@@ -29,7 +30,7 @@ const RegisterForm = (props) => {
     }
   };
   const changeUrl = () => {
-    setVerifyCodeUrl(`http://localhost:6180/edu-platform/api/v1/getVerifyCode?t=${Date.now()}`);
+    setVerifyCodeUrl(`${envPrefix}/${config.serverName}/api/v1/getVerifyCode?t=${Date.now()}`);
   };
   return (
     <Form size="large" className="login-form app-main-form" initialValues={{ remember: true }} onFinish={onFinish} ref={registerForm}>

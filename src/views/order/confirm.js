@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopBar from '../../components/TopBar';
 import { withRouter, Link } from 'react-router-dom';
 import { formatPrice } from '../../assets/js/utils';
@@ -7,13 +7,16 @@ import { Button, message } from 'antd';
 import Footer from '../../components/Footer';
 const Confirm = (props) => {
   const { selectedList, userId } = props.location.state;
+  const [isFixed, setIsFixed] = useState(true);
   let productIds = [];
   let payMoney = 0;
   for (let i = 0; i < selectedList.length; i++) {
     payMoney += selectedList[i].course.price;
     productIds.push(selectedList[i].courseId);
   }
-
+  const func = (value) => {
+    setIsFixed(!value ? true : false);
+  };
   const renderCartList = () => {
     return selectedList.map((item) => {
       return (
@@ -64,7 +67,7 @@ const Confirm = (props) => {
           </ul>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer func={func} isFixed={isFixed}></Footer>
     </>
   );
 };

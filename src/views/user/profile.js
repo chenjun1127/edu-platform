@@ -104,7 +104,7 @@ const ModalContent = (props) => {
   const initialValues = {
     name: props.userInfo.name,
     sex: props.userInfo.sex,
-    areaCode: props.userInfo.areaCode.split('-'),
+    areaCode: props.userInfo.areaCode ? props.userInfo.areaCode.split('-') : '',
     sign: props.userInfo.sign,
     phone: props.userInfo.phone,
   };
@@ -122,7 +122,7 @@ const ModalContent = (props) => {
             </Radio.Group>
           </Form.Item>
           <Form.Item name="areaCode" label="地区">
-            <Cascader options={props.list} onChange={onChange} fieldNames={{ label: 'name', value: 'code' }} />
+            <Cascader options={props.list} onChange={onChange} fieldNames={{ label: 'name', value: 'code' }} placeholder="请选择" />
           </Form.Item>
           <Form.Item name="sign" label="个姓签名">
             <Input.TextArea type="textarea" rows={4} />

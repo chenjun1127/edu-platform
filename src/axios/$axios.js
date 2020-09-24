@@ -1,10 +1,11 @@
 import axios from 'axios';
+import config from '../config';
 // 创建axios实例
 const $axios = axios.create({
   timeout: 80000,
   // 允许跨域带token
   withCredentials: true,
-  baseURL: `${process.env.NODE_ENV === 'development' ? 'http://localhost:6180' : 'http://119.29.165.98'}/edu-platform-server/api`,
+  baseURL: `${process.env.NODE_ENV === 'development' ? config.devApi : config.prodApi}/${config.serverName}/api`,
 });
 // 设置缓存时间 和缓存请求数组
 $axios.defaults.withCredentials = true;
@@ -47,7 +48,7 @@ $axios.interceptors.response.use(
   (response) => {
     if (response.data && response.data.code >= 40300) {
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = `/${config.projectName}/login`;
       }, 1000);
     }
     return response;

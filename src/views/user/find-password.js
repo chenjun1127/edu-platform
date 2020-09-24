@@ -3,6 +3,7 @@ import { Form, Input, Button, message } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { sendPasswordEmail } from '../../api/base';
 import { AppContext } from '../../hooks/context';
+import config from '../../config';
 const FindPassword = (props) => {
   const { dispatch } = useContext(AppContext);
   const toHome = () => {
@@ -12,7 +13,7 @@ const FindPassword = (props) => {
   };
   const onFinish = (values) => {
     const { name, email } = values;
-    const url = window.location.origin + '/password/reset';
+    const url = window.location.origin + '/' + config.projectName + '/password/reset';
     sendPasswordEmail({ name, email, url }).then((res) => {
       if (res.data.code === 0) {
         props.history.push(`/password/link?name=${name}&email=${email}`);

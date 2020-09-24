@@ -50,7 +50,7 @@ const UserCourse = (props) => {
         );
       });
     } else {
-      return <div className="no-data">暂无数据</div>;
+      return <div className="user-course-no-data">暂无数据</div>;
     }
   };
   return (
