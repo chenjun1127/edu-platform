@@ -13,7 +13,7 @@ const TopBar = () => {
     },
     {
       text: '个人中心',
-      path: userInfo ? '/user/center/' + userInfo.id : '/user/center',
+      path: userInfo ? '/user/center/' + userInfo.id : '/login',
     },
   ];
   const renderMenu = () => {

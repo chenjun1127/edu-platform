@@ -28,7 +28,7 @@ const Routes = () => {
   const [state, dispatch] = useReducer(reducer, initState);
   const value = { state, dispatch };
   return (
-    <Router>
+    <Router basename="/edu-platform">
       <Suspense
         fallback={
           <div className="loading-container">
