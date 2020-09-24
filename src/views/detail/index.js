@@ -95,6 +95,13 @@ const Detail = (props) => {
   const refreshData = () => {
     getDetail();
   };
+  const [isFixed, setIsFixed] = useState(true);
+  const func = (value) => {
+    setIsFixed(!value ? true : false);
+  };
+  const handleChange = () => {
+    func();
+  };
   return (
     <>
       <Top></Top>
@@ -116,7 +123,7 @@ const Detail = (props) => {
         </div>
       </div>
       <div className="detail-nav">
-        <Tabs defaultActiveKey="1" size="large" centered>
+        <Tabs defaultActiveKey="1" size="large" centered onChange={handleChange}>
           <TabPane tab="章节目录" key="1">
             {Object.keys(data).length && <Chapters data={data} />}
           </TabPane>
@@ -125,7 +132,7 @@ const Detail = (props) => {
           </TabPane>
         </Tabs>
       </div>
-      <Footer></Footer>
+      <Footer func={func} isFixed={isFixed}></Footer>
       <CommonModal width={400} visible={visible} component={<ModalContent {...props} cancel={handleCancel} />} handleCancel={handleCancel} />
       <CommonModal width={400} visible={flag} component={<ModalContentAlert {...props} cancel={handleCancelAlert} />} handleCancel={handleCancelAlert} />
     </>

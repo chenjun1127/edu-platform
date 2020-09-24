@@ -35,7 +35,7 @@ const Main = () => {
             <p>{item.summary}</p>
             <p>
               <span>￥{formatPrice(item.price)}</span>
-              <em>{item.point}</em>
+              <em>{item.point.toFixed(2)}</em>
             </p>
           </Link>
         </li>
