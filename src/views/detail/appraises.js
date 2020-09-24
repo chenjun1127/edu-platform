@@ -96,7 +96,6 @@ const AppraisesList = ({ list, total, size, onPageChange }) => {
     <>
       {renderList()}
       <div className="main-pagination">{total > 0 && <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onPageChange} />}</div>
-      {}
     </>
   );
 };
