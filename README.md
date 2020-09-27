@@ -14,5 +14,5 @@ yarn start
 ```
 打包
 ```
-yarn start
+yarn build
 ```
