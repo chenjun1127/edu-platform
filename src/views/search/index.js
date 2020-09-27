@@ -73,7 +73,7 @@ const Index = (props) => {
       </ul>
       {total > 0 && (
         <div className="main-pagination" style={{ padding: '20px' }}>
-          <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onChange} />{' '}
+          <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onChange} />
         </div>
       )}
       <Footer></Footer>
