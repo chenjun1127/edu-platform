@@ -11,11 +11,7 @@ const Index = (props) => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const size = 10;
-  const [isFixed, setIsFixed] = useState(true);
-  const func = (value) => {
-    setIsFixed(!value ? true : false);
-  };
-
+  const minHeight = document.documentElement.clientHeight - 120 - 48 - 56 - 53;
   const getSearch = useCallback(
     (keyword) => {
       searchByKeyword({ params: { keyword, pageNo: page, pageSize: size } }).then((res) => {
@@ -72,11 +68,15 @@ const Index = (props) => {
       <div className="search-result">
         搜索出<span>{keyword}</span>的结果共{total}条
       </div>
-      <ul className="search-list">{renderList()}</ul>
-      <div className="main-pagination" style={{ padding: '20px' }}>
-        {total > 0 && <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onChange} />}
-      </div>
-      <Footer func={func} isFixed={isFixed}></Footer>
+      <ul className="search-list" style={{ minHeight: minHeight }}>
+        {renderList()}
+      </ul>
+      {total > 0 && (
+        <div className="main-pagination" style={{ padding: '20px' }}>
+          <Pagination className="app-page" defaultCurrent={1} defaultPageSize={size} total={total} onChange={onChange} />{' '}
+        </div>
+      )}
+      <Footer></Footer>
     </>
   );
 };
