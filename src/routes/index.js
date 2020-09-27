@@ -21,6 +21,7 @@ const Order = lazy(() => import('../views/order/center'));
 const Cart = lazy(() => import('../views/order/cart'));
 const Confirm = lazy(() => import('../views/order/confirm'));
 const Pay = lazy(() => import('../views/order/pay'));
+const Search = lazy(() => import('../views/search/index'));
 const Routes = () => {
   // 多个useReducer
   const reducer = combineReducers({ userReducer, operateReducer, shoppingCartReducer });
@@ -49,6 +50,7 @@ const Routes = () => {
               <Route path="/password/link" component={PasswordLink} />
               <Route path="/password/reset" component={ResetPassword} />
               <Route path="/detail/:id" component={Detail} />
+              <Route path="/search" component={Search} />
               <PrivateRoute path="/user/center/:id" component={User} />
               <PrivateRoute path="/order/center" component={Order} />
               <PrivateRoute path="/order/cart" exact component={Cart} />

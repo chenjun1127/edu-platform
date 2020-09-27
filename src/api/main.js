@@ -89,3 +89,9 @@ export const getAppraiseList = (params) => {
     $axios.get('/v1/appraise/list', params).then(resolve).catch(reject);
   });
 };
+
+export const searchByKeyword = (params) => {
+  return new Promise((resolve, reject) => {
+    $axios.get('/v1/course/search', params).then(resolve).catch(reject);
+  });
+};
