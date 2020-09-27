@@ -54,7 +54,6 @@ const Index = (props) => {
   };
   const handleSearch = (value) => {
     props.history.replace({ pathname: '/search', search: `keyword=${value.trim()}` });
-    getSearch(value.trim());
     setKeyword(value.trim());
   };
   return (
